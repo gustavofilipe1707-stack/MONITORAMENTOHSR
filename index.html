@@ -9,18 +9,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Paleta Leve e Descansada */
-            --primary: #475569;
-            --bg-body: #f1f5f9;
-            --card-bg: #ffffff;
-            --border: #e2e8f0;
-            --text-main: #1e293b;
-            --text-dim: #64748b;
-            --success: #22c55e;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --calling: #3b82f6;
-            --accent: #6366f1;
+            /* Paleta Leve baseada no parâmetro enviado */
+            --primary-gray: #999999;
+            --bg-body: #ffffff;
+            --header-bg: #b3b3b3;
+            --row-even: #f2f2f2;
+            --row-odd: #ffffff;
+            --border: #cccccc;
+            --text-main: #333333;
+            --text-dim: #666666;
+            --success: #dff0d8; /* Verde claro para Disponível */
+            --success-text: #3c763d;
+            --calling: #fcf8e3; /* Amarelo claro para Atendimento */
+            --calling-text: #8a6d3b;
+            --pause: #f2dede; /* Vermelho claro para Ocorrência/Pausa */
+            --pause-text: #a94442;
         }
 
         body {
@@ -28,15 +31,14 @@
             color: var(--text-main);
             font-family: 'Plus Jakarta Sans', sans-serif;
             margin: 0;
-            padding: 25px;
-            min-height: 100vh;
+            padding: 15px;
         }
 
         /* --- LOGIN OVERLAY --- */
         #selector-overlay {
             position: fixed;
             inset: 0;
-            background: var(--bg-body);
+            background: #fff;
             z-index: 10000;
             display: flex;
             justify-content: center;
@@ -44,143 +46,92 @@
         }
 
         .login-box {
-            background: var(--card-bg);
+            background: #fff;
             padding: 40px;
-            border-radius: 24px;
+            border-radius: 8px;
             border: 1px solid var(--border);
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             width: 350px;
         }
 
         .btn-entry {
-            padding: 12px;
+            padding: 10px;
             width: 100%;
-            border-radius: 10px;
+            border-radius: 4px;
             border: 1px solid var(--border);
-            background: #f8fafc;
-            color: var(--text-main);
+            background: #eee;
+            color: #333;
             cursor: pointer;
             font-weight: 700;
             margin-bottom: 10px;
-            transition: 0.2s;
             text-transform: uppercase;
-            font-size: 13px;
         }
 
-        .btn-entry:hover {
-            background: var(--accent);
-            color: #fff;
-            border-color: transparent;
-        }
-
-        /* --- HEADER --- */
+        /* --- HEADER & STATS --- */
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--header-bg);
         }
 
-        .brand h1 {
-            font-size: 20px;
-            font-weight: 800;
-            margin: 0;
-            color: var(--text-main);
-        }
+        .brand h1 { font-size: 18px; margin: 0; color: var(--text-main); }
+        .stat-group { display: flex; gap: 10px; align-items: center; }
+        .stat-card { padding: 5px 15px; border-radius: 4px; background: #eee; border: 1px solid var(--border); font-size: 12px; }
+        .stat-val { font-weight: 800; color: #000; }
 
-        .stat-group { display: flex; gap: 12px; }
-
-        .stat-card {
-            background: #f8fafc;
-            padding: 10px 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            text-align: center;
-            min-width: 100px;
-        }
-
-        .stat-val { font-size: 22px; font-weight: 800; color: var(--accent); }
-        .stat-label { font-size: 10px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; }
-
-        /* --- SEARCH --- */
-        .search-wrapper { position: relative; }
         .search-box {
-            background: #f8fafc;
             border: 1px solid var(--border);
-            padding: 10px 15px 10px 40px;
-            border-radius: 10px;
-            color: var(--text-main);
-            width: 250px;
-            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            width: 200px;
         }
 
-        .search-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-dim); }
-
-        /* --- TABLE --- */
-        table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
-        thead th { padding: 10px 20px; color: var(--text-dim); font-size: 11px; text-transform: uppercase; text-align: left; }
+        /* --- TABLE STYLE (BASEADO NA IMAGEM) --- */
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
         
-        .row-agent { background: var(--card-bg); transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .row-agent:hover { background: #fdfdfd; transform: translateY(-1px); box-shadow: 0 4px 6px rgba(0,0,0,0.04); }
+        thead th {
+            background: var(--primary-gray);
+            color: white;
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #fff;
+        }
 
-        td { padding: 15px 20px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        td:first-child { border-left: 1px solid var(--border); border-radius: 12px 0 0 12px; }
-        td:last-child { border-right: 1px solid var(--border); border-radius: 0 12px 12px 0; }
-
-        /* --- BADGES --- */
-        .badge-status {
+        .fila-section td {
+            background: var(--header-bg);
+            color: #fff;
+            font-weight: 800;
             padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
+            border: 1px solid #fff;
         }
 
-        .bg-available { background: #dcfce7; color: #166534; }
-        .bg-calling { background: #dbeafe; color: #1e40af; }
-        .bg-pause { background: #fef3c7; color: #92400e; }
-        
-        .timer { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--text-dim); margin-top: 3px; display: block; }
+        .fila-bar { display: flex; justify-content: space-between; align-items: center; }
 
-        /* --- FILA DIVIDER --- */
-        .fila-section td { border: none; padding: 30px 0 10px 5px; background: transparent; }
-        .fila-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-left: 4px solid var(--accent);
-            padding: 0 15px;
+        .row-agent td {
+            padding: 6px 10px;
+            border: 1px solid var(--border);
         }
 
-        .fila-name { font-size: 15px; font-weight: 800; color: var(--text-main); }
-        .dialing-box {
-            background: #eef2ff;
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--accent);
-        }
+        .row-agent:nth-child(even) { background: var(--row-even); }
+        .row-agent:nth-child(odd) { background: var(--row-odd); }
+
+        /* --- STATUS COLORS --- */
+        .status-cell { font-weight: 600; text-align: center; }
+        .available { background-color: var(--success); color: var(--success-text); }
+        .busy { background-color: var(--calling); color: var(--calling-text); }
+        .paused { background-color: var(--pause); color: var(--pause-text); }
 
         .btn-ctrl {
             background: #fff;
             border: 1px solid var(--border);
-            color: var(--text-dim);
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
             cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 3px;
         }
-
-        .btn-ctrl:hover { color: var(--danger); border-color: var(--danger); }
     </style>
 </head>
 
@@ -192,11 +143,11 @@
             <div id="step-1">
                 <button class="btn-entry" onclick="entrar('INTERVIEW')">Acesso Interview</button>
                 <button class="btn-entry" onclick="entrar('DMG')">Acesso DMG</button>
-                <button class="btn-entry" style="color:var(--accent);" onclick="irParaSenha()">👑 FULL COMMAND (HSR)</button>
+                <button class="btn-entry" style="background:#b3b3b3;" onclick="irParaSenha()">👑 FULL COMMAND (HSR)</button>
             </div>
             <div id="step-2" style="display:none">
                 <input type="password" id="hsr-pass" class="search-box" style="width:100%; margin-bottom:15px; text-align:center" placeholder="SENHA">
-                <button class="btn-entry" style="background:var(--accent); color:#fff" onclick="validar()">ACESSAR</button>
+                <button class="btn-entry" style="background:#333; color:#fff" onclick="validar()">ACESSAR</button>
             </div>
         </div>
     </div>
@@ -204,34 +155,24 @@
     <div id="main-panel" style="display:none">
         <div class="top-bar">
             <div class="brand">
-                <h1>HSR MONITOR <span id="label-empresa" style="font-weight:400; color:var(--text-dim); margin-left:8px"></span></h1>
-                <p style="margin:2px 0 0; font-size:11px; color:var(--text-dim);">Acompanhamento de Operação em Tempo Real</p>
+                <h1>HSR MONITOR - <span id="label-empresa"></span></h1>
             </div>
-
             <div class="stat-group">
-                <div class="stat-card">
-                    <div id="count-total" class="stat-val">0</div>
-                    <div class="stat-label">Agentes</div>
-                </div>
-                <div class="stat-card">
-                    <div id="count-calls" class="stat-val" style="color: var(--calling)">0</div>
-                    <div class="stat-label">Em Linha</div>
-                </div>
-                <div class="search-wrapper">
-                    <i class="bi bi-search"></i>
-                    <input type="text" id="filtro" class="search-box" placeholder="Buscar..." oninput="renderizarTabela()">
-                </div>
+                <div class="stat-card">Agentes: <span id="count-total" class="stat-val">0</span></div>
+                <div class="stat-card">Falando: <span id="count-calls" class="stat-val">0</span></div>
+                <input type="text" id="filtro" class="search-box" placeholder="Filtrar..." oninput="renderizarTabela()">
             </div>
         </div>
 
         <table>
             <thead>
                 <tr>
+                    <th>Agente</th>
                     <th>Ramal</th>
-                    <th>Operador</th>
+                    <th>Duração</th>
+                    <th>Falando com</th>
+                    <th>Fila</th>
                     <th>Status</th>
-                    <th>Destino</th>
-                    <th>Projeto / Fila</th>
                     <th style="text-align:right">Ações</th>
                 </tr>
             </thead>
@@ -255,7 +196,7 @@
                 '16631': 'POLITICA_SP',
                 '16650': 'SANEAMENTO_GO',
             };
-            return mapa[r] || filaMemory[r] || "PROJETO_PENDENTE";
+            return mapa[r] || filaMemory[r] || "OUTROS";
         }
 
         async function sincronizar() {
@@ -268,8 +209,7 @@
                 const dataStatus = await resStatus.json();
                 const dataCalls = await resCalls.json();
                 
-                // --- LÓGICA DE UNICIDADE DE CHAMADAS ---
-                // Filtramos os registros duplicados considerando apenas um registro por Call ID
+                // --- FILTRO DE UNICIDADE (CALL ID ÚNICO) ---
                 const rawCalls = dataCalls.calls || [];
                 const uniqueIds = new Set();
                 chamadasAtivas = rawCalls.filter(call => {
@@ -283,19 +223,14 @@
                         const ramal = ext.extension;
                         const call = chamadasAtivas.find(c => String(c.extension) === String(ramal));
 
-                        if (call && call.caller_name) {
-                            const cName = call.caller_name.toUpperCase();
-                            if (!cName.includes("OUTBOUND") && !cName.includes("REDISCAGEM")) {
-                                const match = cName.match(/^[A-Z0-9_]+/);
-                                if (match) filaMemory[ramal] = match[0];
-                            }
+                        if (call && call.caller_name && !call.caller_name.toUpperCase().includes("OUTBOUND")) {
+                            const match = call.caller_name.toUpperCase().match(/^[A-Z0-9_]+/);
+                            if (match) filaMemory[ramal] = match[0];
                         }
 
                         return {
-                            ramal,
-                            dominio: ext.domain,
-                            call_id: call?.call_id,
-                            nome: ext.agent_info?.agent_name?.split('_')[0] || "OPERADOR",
+                            ramal, dominio: ext.domain, call_id: call?.call_id,
+                            nome: ext.agent_info?.agent_name?.split('_')[0] || "AGENTE",
                             empresa: ext.agent_info?.agent_name?.split('_').pop().toUpperCase() || "HSR",
                             status: ext.agent_info?.agent_status || "OFFLINE",
                             chamada: call,
@@ -314,7 +249,6 @@
             corpo.innerHTML = "";
 
             let filtrados = selectedEmpresa === "HSR" ? dadosGlobais : dadosGlobais.filter(d => d.empresa === selectedEmpresa);
-
             document.getElementById('count-total').innerText = filtrados.length;
             document.getElementById('count-calls').innerText = filtrados.filter(f => f.chamada).length;
 
@@ -324,16 +258,17 @@
                 let agentesHtml = "";
                 let hasVisible = false;
 
-                // Contagem de discagem também filtrada por Call ID único
+                // Contagem de discagem filtrada por Call ID único
                 const emDiscagem = chamadasAtivas.filter(c => c.caller_name?.toUpperCase().includes(nomeFila) && !c.extension).length;
 
                 grupos[nomeFila].forEach(item => {
                     if (busca && !item.fila.includes(busca) && !item.nome.toUpperCase().includes(busca) && !item.ramal.includes(busca)) return;
                     hasVisible = true;
 
-                    let sClass = "bg-pause", sText = item.status;
-                    if (item.chamada) { sClass = "bg-calling"; sText = "Em Linha"; }
-                    else if (item.status === "Available") { sClass = "bg-available"; sText = "Livre"; }
+                    let sClass = "paused", sText = item.status;
+                    if (item.chamada) { sClass = "busy"; sText = "Em Atendimento"; }
+                    else if (item.status === "Available") { sClass = "available"; sText = "Disponível"; }
+                    if (sText.includes("PAUSE") || sText.includes("Tabulação")) sClass = "paused";
 
                     if (!timers[item.ramal] || timers[item.ramal].status !== sText) timers[item.ramal] = { status: sText, start: agora };
                     const diff = agora - timers[item.ramal].start;
@@ -341,26 +276,23 @@
 
                     agentesHtml += `
                         <tr class="row-agent">
-                            <td style="font-family:'JetBrains Mono'">${item.ramal}</td>
-                            <td><b style="font-size:14px">${item.nome}</b></td>
-                            <td>
-                                <span class="badge-status ${sClass}">${sText}</span>
-                                <span class="timer">${tempoStr}</span>
-                            </td>
-                            <td style="font-family:'JetBrains Mono'; color:var(--calling)">${item.chamada?.phone_number || "---"}</td>
-                            <td><span style="font-size:12px; font-weight:600; color:var(--text-dim)">${item.fila}</span></td>
+                            <td><b>${item.nome}</b></td>
+                            <td>${item.ramal}</td>
+                            <td>${tempoStr}</td>
+                            <td>${item.chamada?.phone_number || "-"}</td>
+                            <td>${item.fila}</td>
+                            <td class="status-cell ${sClass}">${sText}</td>
                             <td style="text-align:right">
-                                <button class="btn-ctrl" onclick="alert('Ramal ${item.ramal}')"><i class="bi bi-info-circle"></i></button>
-                                ${item.call_id ? `<button class="btn-ctrl" onclick="derrubar('${item.call_id}')" style="margin-left:5px"><i class="bi bi-telephone-x"></i></button>` : ''}
+                                <button class="btn-ctrl" onclick="derrubar('${item.call_id}')" ${!item.call_id ? 'disabled' : ''}><i class="bi bi-telephone-x"></i></button>
                             </td>
                         </tr>`;
                 });
 
                 if (hasVisible) {
                     corpo.innerHTML += `
-                        <tr class="fila-section"><td colspan="6">
+                        <tr class="fila-section"><td colspan="7">
                             <div class="fila-bar">
-                                <div class="fila-name">${nomeFila} <span style="font-weight:400; font-size:12px; color:var(--text-dim)">(${grupos[nomeFila].length})</span></div>
+                                <div>${nomeFila} (${grupos[nomeFila].length})</div>
                                 <div class="dialing-box">DISCANDO: ${emDiscagem}</div>
                             </div>
                         </td></tr>`;
@@ -372,8 +304,11 @@
         function entrar(emp) { selectedEmpresa = emp; document.getElementById('selector-overlay').style.display = 'none'; document.getElementById('main-panel').style.display = 'block'; document.getElementById('label-empresa').innerText = emp; setInterval(sincronizar, 1500); }
         function irParaSenha() { document.getElementById('step-1').style.display = 'none'; document.getElementById('step-2').style.display = 'block'; }
         function validar() { if (document.getElementById('hsr-pass').value === "hsr") entrar('HSR'); else alert("Incorreto"); }
-        async function derrubar(id) { if (confirm("Derrubar chamada?")) await fetch('https://fastdialer.fastquest.net/app/extensions/active_calls_api.php', { method: 'DELETE', body: JSON.stringify({ call_id: id }) }); }
+        async function derrubar(id) { 
+            if (id && confirm("Derrubar chamada?")) {
+                await fetch(`https://fastdialer.fastquest.net/app/extensions/active_calls_api.php?call_id=${id}`, { method: 'DELETE' });
+            }
+        }
     </script>
 </body>
-
 </html>
