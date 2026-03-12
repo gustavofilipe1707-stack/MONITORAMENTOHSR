@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Nova Paleta: Vermelho, Branco e Cinza */
             --hsr-red: #e30613;
             --hsr-red-dark: #b30510;
             --bg-body: #f4f7f6;
@@ -17,11 +16,8 @@
             --gray-light: #e0e0e0;
             --gray-medium: #666666;
             --gray-dark: #333333;
-            
             --border: #dddddd;
             --text-main: #2d2d2d;
-            
-            /* Status com cores mais vivas */
             --success: #28a745;
             --warning: #ffc107;
             --danger: #dc3545;
@@ -35,156 +31,55 @@
             padding: 15px;
         }
 
-        /* --- LOGIN OVERLAY --- */
+        /* --- LOGIN --- */
         #selector-overlay {
-            position: fixed;
-            inset: 0;
+            position: fixed; inset: 0;
             background: linear-gradient(135deg, #f5f5f5 0%, #d7d7d7 100%);
-            z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            z-index: 10000; display: flex; justify-content: center; align-items: center;
         }
-
         .login-box {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            width: 380px;
-            border-top: 5px solid var(--hsr-red);
+            background: var(--white); padding: 40px; border-radius: 12px;
+            text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 380px; border-top: 5px solid var(--hsr-red);
         }
-
         .btn-entry {
-            padding: 12px;
-            width: 100%;
-            border-radius: 6px;
-            border: 1px solid var(--gray-light);
-            background: var(--white);
-            color: var(--gray-dark);
-            cursor: pointer;
-            font-weight: 700;
-            margin-bottom: 12px;
-            transition: all 0.2s;
-            text-transform: uppercase;
-            font-size: 13px;
+            padding: 12px; width: 100%; border-radius: 6px; border: 1px solid var(--gray-light);
+            background: var(--white); color: var(--gray-dark); cursor: pointer;
+            font-weight: 700; margin-bottom: 12px; transition: 0.3s; text-transform: uppercase; font-size: 13px;
         }
+        .btn-entry:hover { background: var(--hsr-red); color: white; border-color: var(--hsr-red); }
 
-        .btn-entry:hover {
-            background: var(--hsr-red);
-            color: white;
-            border-color: var(--hsr-red);
-        }
-
-        /* --- TOP BAR --- */
+        /* --- LAYOUT --- */
         .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            background: var(--white);
-            padding: 15px 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; background: var(--white); padding: 15px 20px;
+            border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-
         .brand h1 { font-size: 20px; margin: 0; color: var(--hsr-red); font-weight: 800; }
         .stat-group { display: flex; gap: 15px; align-items: center; }
-        .stat-card { 
-            padding: 8px 16px; 
-            border-radius: 6px; 
-            background: var(--bg-body); 
-            border: 1px solid var(--gray-light); 
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--gray-medium);
-        }
-        .stat-val { font-weight: 800; color: var(--hsr-red); font-size: 14px; }
-
-        .search-box {
-            border: 1px solid var(--gray-light);
-            padding: 8px 15px;
-            border-radius: 6px;
-            width: 220px;
-            outline: none;
-        }
+        .stat-card { padding: 8px 16px; border-radius: 6px; background: var(--bg-body); border: 1px solid var(--gray-light); font-size: 12px; font-weight: 600; }
+        .stat-val { font-weight: 800; color: var(--hsr-red); }
+        .search-box { border: 1px solid var(--gray-light); padding: 8px 15px; border-radius: 6px; width: 220px; outline: none; }
         .search-box:focus { border-color: var(--hsr-red); }
 
-        /* --- TABLE STYLE --- */
-        .table-container {
-            background: var(--white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
+        /* --- TABELA --- */
+        .table-container { background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        
-        thead th {
-            background: var(--gray-dark);
-            color: white;
-            padding: 12px 15px;
-            text-align: left;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 0.5px;
-        }
-
-        .fila-section td {
-            background: #eee;
-            color: var(--gray-dark);
-            font-weight: 800;
-            padding: 10px 15px;
-            border-bottom: 2px solid var(--hsr-red);
-            font-size: 14px;
-        }
-
+        thead th { background: var(--gray-dark); color: white; padding: 12px 15px; text-align: left; font-size: 11px; text-transform: uppercase; }
+        .fila-section td { background: #f8f9fa; color: var(--gray-dark); font-weight: 800; padding: 10px 15px; border-bottom: 2px solid var(--hsr-red); font-size: 14px; }
         .fila-bar { display: flex; justify-content: space-between; align-items: center; }
-        .dialing-box { 
-            background: var(--hsr-red); 
-            color: white; 
-            padding: 2px 10px; 
-            border-radius: 20px; 
-            font-size: 11px;
-        }
-
-        .row-agent td {
-            padding: 10px 15px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .row-agent:hover { background-color: #fdfdfd; }
-
-        /* --- STATUS COLORS --- */
-        .status-cell { 
-            font-weight: 700; 
-            text-align: center; 
-            border-radius: 4px;
-            text-transform: uppercase;
-            font-size: 11px;
-        }
+        .dialing-box { background: var(--hsr-red); color: white; padding: 2px 10px; border-radius: 20px; font-size: 11px; }
+        .row-agent td { padding: 10px 15px; border-bottom: 1px solid #f0f0f0; }
         
+        /* --- STATUS --- */
+        .status-cell { font-weight: 700; text-transform: uppercase; font-size: 11px; }
         .available { color: var(--success); }
         .busy { color: var(--hsr-red); font-weight: 800; }
         .paused { color: var(--warning); }
         .offline { color: var(--gray-medium); }
 
-        .btn-ctrl {
-            background: var(--white);
-            border: 1px solid var(--gray-light);
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 4px;
-            color: var(--gray-medium);
-            transition: all 0.2s;
-        }
-        .btn-ctrl:hover:not(:disabled) {
-            background: var(--hsr-red);
-            color: white;
-            border-color: var(--hsr-red);
-        }
+        .btn-ctrl { background: var(--white); border: 1px solid var(--gray-light); cursor: pointer; padding: 5px 10px; border-radius: 4px; color: var(--gray-medium); }
+        .btn-ctrl:hover:not(:disabled) { background: var(--hsr-red); color: white; border-color: var(--hsr-red); }
     </style>
 </head>
 
@@ -199,21 +94,19 @@
                 <button class="btn-entry" style="background: var(--gray-dark); color: white;" onclick="irParaSenha()">👑 FULL COMMAND (HSR)</button>
             </div>
             <div id="step-2" style="display:none">
-                <input type="password" id="hsr-pass" class="search-box" style="width:100%; margin-bottom:15px; text-align:center" placeholder="SENHA DE ACESSO">
-                <button class="btn-entry" style="background:var(--hsr-red); color:#fff; border:none" onclick="validar()">ACESSAR AGORA</button>
+                <input type="password" id="hsr-pass" class="search-box" style="width:100%; margin-bottom:15px; text-align:center" placeholder="SENHA">
+                <button class="btn-entry" style="background:var(--hsr-red); color:#fff; border:none" onclick="validar()">ACESSAR</button>
             </div>
         </div>
     </div>
 
     <div id="main-panel" style="display:none">
         <div class="top-bar">
-            <div class="brand">
-                <h1>HSR MONITOR <span style="color:var(--gray-medium); font-weight:300">|</span> <span id="label-empresa" style="color:var(--gray-dark)"></span></h1>
-            </div>
+            <div class="brand"><h1>HSR MONITOR | <span id="label-empresa" style="color:var(--gray-dark)"></span></h1></div>
             <div class="stat-group">
                 <div class="stat-card">LOGADOS: <span id="count-total" class="stat-val">0</span></div>
-                <div class="stat-card">EM CHAMADA: <span id="count-calls" class="stat-val">0</span></div>
-                <input type="text" id="filtro" class="search-box" placeholder="Buscar agente, ramal ou fila..." oninput="renderizarTabela()">
+                <div class="stat-card">EM LIGAÇÃO: <span id="count-calls" class="stat-val">0</span></div>
+                <input type="text" id="filtro" class="search-box" placeholder="Buscar..." oninput="renderizarTabela()">
             </div>
         </div>
 
@@ -223,9 +116,9 @@
                     <tr>
                         <th style="width: 20%;">Agente</th>
                         <th style="width: 10%;">Ramal</th>
-                        <th style="width: 12%;">Tempo Status</th>
+                        <th style="width: 12%;">Duração</th>
                         <th style="width: 15%;">Telefone</th>
-                        <th style="width: 15%;">Fila Atual</th>
+                        <th style="width: 15%;">Fila</th>
                         <th style="width: 18%; text-align:center">Status</th>
                         <th style="width: 10%; text-align:right">Ações</th>
                     </tr>
@@ -237,77 +130,52 @@
 
     <script>
         let selectedEmpresa = "";
-        const filaMemory = {}; // Memória para não perder a fila do agente
         const timers = {};
         let dadosGlobais = [];
         let chamadasAtivas = [];
 
-        function getFilaDinamica(item) {
-            const ramal = String(item.ramal);
-            
-            // 1. Prioridade: Mapa estático (Configurações manuais)
-            const mapaFixo = {
-                '16628': 'BRK_SUL',
-                '16629': 'BRK_SUL',
-                '16630': 'POLITICA_SP',
-                '16631': 'POLITICA_SP',
-                '16650': 'SANEAMENTO_GO',
-            };
-            if (mapaFixo[ramal]) return mapaFixo[ramal];
+        function getFilaPersistente(ramal, chamada) {
+            const r = String(ramal);
+            const mapaFixo = { '16628': 'BRK_SUL', '16629': 'BRK_SUL', '16630': 'POLITICA_SP', '16631': 'POLITICA_SP', '16650': 'SANEAMENTO_GO' };
+            if (mapaFixo[r]) return mapaFixo[r];
 
-            // 2. Se o agente está falando agora, captura a fila da chamada
-            if (item.chamada && item.chamada.caller_name) {
-                const cName = item.chamada.caller_name.toUpperCase();
-                if (!cName.includes("OUTBOUND")) {
+            if (chamada && chamada.caller_name) {
+                const cName = chamada.caller_name.toUpperCase();
+                if (!cName.includes("OUTBOUND") && !cName.includes("ANONYMOUS")) {
                     const match = cName.match(/^[A-Z0-9_]+/);
                     if (match) {
-                        filaMemory[ramal] = match[0]; // Salva na memória
+                        localStorage.setItem(`fila_ramal_${r}`, match[0]);
                         return match[0];
                     }
                 }
             }
-
-            // 3. Se não está falando, tenta lembrar a última fila que ele usou
-            return filaMemory[ramal] || "OUTROS";
+            return localStorage.getItem(`fila_ramal_${r}`) || "OUTROS";
         }
 
         async function sincronizar() {
             if (!selectedEmpresa) return;
             try {
                 const [resStatus, resCalls] = await Promise.all([
-                    fetch(`https://fastdialer.fastquest.net/app/extensions/extensions_status_api.php`),
-                    fetch(`https://fastdialer.fastquest.net/app/extensions/active_calls_api.php`)
+                    fetch(`https://fastdialer.fastquest.net/app/extensions/extensions_status_api.php?t=${Date.now()}`),
+                    fetch(`https://fastdialer.fastquest.net/app/extensions/active_calls_api.php?t=${Date.now()}`)
                 ]);
                 const dataStatus = await resStatus.json();
                 const dataCalls = await resCalls.json();
                 
-                const rawCalls = dataCalls.calls || [];
-                const uniqueIds = new Set();
-                chamadasAtivas = rawCalls.filter(call => {
-                    if (!call.call_id || uniqueIds.has(call.call_id)) return false;
-                    uniqueIds.add(call.call_id);
-                    return true;
-                });
+                chamadasAtivas = dataCalls.calls || [];
 
                 if (dataStatus.success) {
                     dadosGlobais = dataStatus.extensions.map(ext => {
-                        const ramal = ext.extension;
-                        const call = chamadasAtivas.find(c => String(c.extension) === String(ramal));
-
-                        const objBase = {
-                            ramal, 
-                            dominio: ext.domain, 
-                            call_id: call?.call_id,
+                        const ramal = String(ext.extension);
+                        const call = chamadasAtivas.find(c => String(c.extension) === ramal);
+                        return {
+                            ramal, call_id: call?.call_id,
                             nome: ext.agent_info?.agent_name?.split('_')[0] || "AGENTE",
                             empresa: ext.agent_info?.agent_name?.split('_').pop().toUpperCase() || "HSR",
                             status: ext.agent_info?.agent_status || "OFFLINE",
-                            chamada: call
+                            chamada: call,
+                            fila: getFilaPersistente(ramal, call)
                         };
-
-                        // Define a fila usando a nova lógica dinâmica
-                        objBase.fila = getFilaDinamica(objBase);
-                        
-                        return objBase;
                     });
                     renderizarTabela();
                 }
@@ -324,17 +192,12 @@
             document.getElementById('count-total').innerText = filtrados.length;
             document.getElementById('count-calls').innerText = filtrados.filter(f => f.chamada).length;
 
-            // Agrupa por Fila
-            const grupos = filtrados.reduce((acc, obj) => { 
-                (acc[obj.fila] = acc[obj.fila] || []).push(obj); 
-                return acc; 
-            }, {});
+            const grupos = filtrados.reduce((acc, obj) => { (acc[obj.fila] = acc[obj.fila] || []).push(obj); return acc; }, {});
 
             Object.keys(grupos).sort().forEach(nomeFila => {
                 let agentesHtml = "";
                 let hasVisible = false;
-
-                const emDiscagem = chamadasAtivas.filter(c => c.caller_name?.toUpperCase().includes(nomeFila) && !c.extension).length;
+                const emDiscagem = chamadasAtivas.filter(c => c.caller_name?.toUpperCase().includes(nomeFila) && (!c.extension || c.extension === "")).length;
 
                 grupos[nomeFila].forEach(item => {
                     if (busca && !item.fila.includes(busca) && !item.nome.toUpperCase().includes(busca) && !item.ramal.includes(busca)) return;
@@ -347,54 +210,31 @@
 
                     if (!timers[item.ramal] || timers[item.ramal].status !== sText) timers[item.ramal] = { status: sText, start: agora };
                     const diff = agora - timers[item.ramal].start;
-                    const tempoStr = `${Math.floor(diff / 60)}m ${diff % 60}s`;
 
                     agentesHtml += `
                         <tr class="row-agent">
                             <td><b style="color:var(--gray-dark)">${item.nome}</b></td>
                             <td><span style="font-family:'JetBrains Mono'">${item.ramal}</span></td>
-                            <td>${tempoStr}</td>
-                            <td>${item.chamada?.phone_number || "-"}</td>
+                            <td>${Math.floor(diff/60)}m ${diff%60}s</td>
+                            <td><b style="color:var(--hsr-red)">${item.chamada?.phone_number || "-"}</b></td>
                             <td><span style="font-size:11px; color:var(--gray-medium)">${item.fila}</span></td>
-                            <td class="status-cell ${sClass}">${sText}</td>
+                            <td class="status-cell ${sClass}" style="text-align:center">${sText}</td>
                             <td style="text-align:right">
-                                <button class="btn-ctrl" onclick="derrubar('${item.call_id}')" ${!item.call_id ? 'disabled' : ''}>
-                                    <i class="bi bi-telephone-x-fill"></i>
-                                </button>
+                                <button class="btn-ctrl" onclick="derrubar('${item.call_id}')" ${!item.call_id ? 'disabled' : ''}><i class="bi bi-telephone-x-fill"></i></button>
                             </td>
                         </tr>`;
                 });
 
                 if (hasVisible) {
-                    corpo.innerHTML += `
-                        <tr class="fila-section"><td colspan="7">
-                            <div class="fila-bar">
-                                <div><i class="bi bi-layers-half"></i> ${nomeFila} <span style="font-weight:400; font-size:12px; margin-left:10px">(${grupos[nomeFila].length} agentes)</span></div>
-                                <div class="dialing-box">DISCANDO: ${emDiscagem}</div>
-                            </div>
-                        </td></tr>`;
-                    corpo.innerHTML += agentesHtml;
+                    corpo.innerHTML += `<tr class="fila-section"><td colspan="7"><div class="fila-bar"><div>${nomeFila}</div><div class="dialing-box">DISCANDO: ${emDiscagem}</div></div></td></tr>` + agentesHtml;
                 }
             });
         }
 
-        function entrar(emp) { 
-            selectedEmpresa = emp; 
-            document.getElementById('selector-overlay').style.display = 'none'; 
-            document.getElementById('main-panel').style.display = 'block'; 
-            document.getElementById('label-empresa').innerText = emp; 
-            setInterval(sincronizar, 1500); 
-            sincronizar();
-        }
-
+        function entrar(emp) { selectedEmpresa = emp; document.getElementById('selector-overlay').style.display = 'none'; document.getElementById('main-panel').style.display = 'block'; document.getElementById('label-empresa').innerText = emp; setInterval(sincronizar, 1500); sincronizar(); }
         function irParaSenha() { document.getElementById('step-1').style.display = 'none'; document.getElementById('step-2').style.display = 'block'; }
-        function validar() { if (document.getElementById('hsr-pass').value.toLowerCase() === "hsr") entrar('HSR'); else alert("Senha Incorreta"); }
-        
-        async function derrubar(id) { 
-            if (id && confirm("Deseja encerrar esta chamada obrigatoriamente?")) {
-                await fetch(`https://fastdialer.fastquest.net/app/extensions/active_calls_api.php?call_id=${id}`, { method: 'DELETE' });
-            }
-        }
+        function validar() { if (document.getElementById('hsr-pass').value.toLowerCase() === "hsr") entrar('HSR'); else alert("Incorreto"); }
+        async function derrubar(id) { if (id && confirm("Derrubar chamada?")) { await fetch(`https://fastdialer.fastquest.net/app/extensions/active_calls_api.php?call_id=${id}`, { method: 'DELETE' }); } }
     </script>
 </body>
 </html>
