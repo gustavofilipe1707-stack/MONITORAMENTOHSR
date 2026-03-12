@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSR SPECIALIST - MONITOR PRO + METRICS</title>
+    <title>HSR SPECIALIST - MONITOR PRO</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
@@ -48,6 +48,9 @@
         .fila-section td { background: #f8f9fa; font-weight: 800; padding: 10px 15px; border-bottom: 2px solid var(--hsr-red); }
         .row-agent td { padding: 10px 15px; border-bottom: 1px solid #f0f0f0; }
         
+        /* REMOVIDO NEGRITO DO NOME PARA MELHOR LEITURA */
+        .agent-name { font-weight: 400; color: var(--gray-dark); font-size: 14px; }
+
         .status-cell { font-weight: 700; text-transform: uppercase; font-size: 10px; text-align: center; border-radius: 4px; }
         .available { color: var(--success); }
         .busy { color: var(--hsr-red); }
@@ -99,7 +102,7 @@
             <div class="brand"><h1>HSR MONITOR | <span id="label-empresa"></span></h1></div>
             <div class="stat-group">
                 <input type="text" id="filtro" class="search-box" placeholder="Filtrar agente ou fila..." oninput="renderizarTabela()">
-                <button onclick="resetMetrics()" class="btn-ctrl" title="Zerar Métricas"><i class="bi bi-trash"></i></button>
+                <button onclick="resetMetrics()" class="btn-ctrl" title="Zerar Métricas"><i class="bi bi-arrow-clockwise"></i></button>
             </div>
         </div>
 
@@ -126,20 +129,20 @@
         const timers = {};
         let dadosGlobais = [];
         let chamadasAtivas = [];
-        let callIdsProcessados = new Set(); // Para não contar a mesma chamada duas vezes
+        
+        // Memória em tempo de execução para não duplicar na mesma sessão
+        let callIdsVistos = new Set();
+        let callIdsCompletados = new Set();
 
-        // --- LÓGICA DE MÉTRICAS ACUMULADAS ---
         function getTodayKey() { return new Date().toISOString().split('T')[0]; }
 
         function loadMetrics() {
             const key = getTodayKey();
-            const stored = JSON.parse(localStorage.getItem('metrics_' + key)) || { discadas: 0, completadas: 0 };
-            return stored;
+            return JSON.parse(localStorage.getItem('metrics_' + key)) || { discadas: 0, completadas: 0 };
         }
 
         function saveMetrics(data) {
-            const key = getTodayKey();
-            localStorage.setItem('metrics_' + key, JSON.stringify(data));
+            localStorage.setItem('metrics_' + getTodayKey(), JSON.stringify(data));
             updateMetricsDisplay();
         }
 
@@ -154,9 +157,8 @@
             document.getElementById('m-taxa').innerText = taxa + "%";
         }
 
-        function resetMetrics() { if(confirm("Zerar métricas de hoje?")) { const key = getTodayKey(); localStorage.removeItem('metrics_' + key); updateMetricsDisplay(); } }
+        function resetMetrics() { if(confirm("Zerar métricas?")) { localStorage.removeItem('metrics_' + getTodayKey()); callIdsVistos.clear(); callIdsCompletados.clear(); updateMetricsDisplay(); } }
 
-        // --- LÓGICA DE FILA E STATUS ---
         function getFilaPersistente(ramal, chamada) {
             const r = String(ramal);
             if (chamada && chamada.caller_name) {
@@ -180,21 +182,20 @@
                 const dataCalls = await resCalls.json();
                 chamadasAtivas = dataCalls.calls || [];
 
-                // --- CONTABILIZAR MÉTRICAS ---
                 let metrics = loadMetrics();
                 let mudou = false;
 
                 chamadasAtivas.forEach(c => {
-                    // Se é um ID novo que nunca vimos
-                    if (!callIdsProcessados.has(c.call_id)) {
+                    // 1. Se é um call_id novo que o monitor nunca viu nesta sessão
+                    if (!callIdsVistos.has(c.call_id)) {
                         metrics.discadas++;
-                        callIdsProcessados.add(c.call_id);
+                        callIdsVistos.add(c.call_id);
                         mudou = true;
                     }
-                    // Se a chamada vinculou a um ramal agora (Completou)
-                    if (c.extension && !c.contabilizada) {
+                    // 2. Se a chamada tem ramal vinculado e ainda não contamos como completada
+                    if (c.extension && c.extension !== "" && !callIdsCompletados.has(c.call_id)) {
                         metrics.completadas++;
-                        c.contabilizada = true; // Marca na memória temporária
+                        callIdsCompletados.add(c.call_id);
                         mudou = true;
                     }
                 });
@@ -243,7 +244,7 @@
                     const diff = agora - timers[item.ramal].start;
 
                     agentesHtml += `<tr class="row-agent">
-                        <td><b>${item.nome}</b></td>
+                        <td class="agent-name">${item.nome}</td>
                         <td>${item.ramal}</td>
                         <td>${Math.floor(diff/60)}m ${diff%60}s</td>
                         <td><b style="color:var(--hsr-red)">${item.chamada?.phone_number || "-"}</b></td>
