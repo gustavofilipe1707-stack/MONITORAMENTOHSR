@@ -4,26 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSR SPECIALIST - MONITOR</title>
+    <title>HSR SPECIALIST - MONITOR PRO</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Paleta Leve baseada no parâmetro enviado */
-            --primary-gray: #999999;
-            --bg-body: #ffffff;
-            --header-bg: #b3b3b3;
-            --row-even: #f2f2f2;
-            --row-odd: #ffffff;
-            --border: #cccccc;
-            --text-main: #333333;
-            --text-dim: #666666;
-            --success: #dff0d8; /* Verde claro para Disponível */
-            --success-text: #3c763d;
-            --calling: #fcf8e3; /* Amarelo claro para Atendimento */
-            --calling-text: #8a6d3b;
-            --pause: #f2dede; /* Vermelho claro para Ocorrência/Pausa */
-            --pause-text: #a94442;
+            /* Nova Paleta: Vermelho, Branco e Cinza */
+            --hsr-red: #e30613;
+            --hsr-red-dark: #b30510;
+            --bg-body: #f4f7f6;
+            --white: #ffffff;
+            --gray-light: #e0e0e0;
+            --gray-medium: #666666;
+            --gray-dark: #333333;
+            
+            --border: #dddddd;
+            --text-main: #2d2d2d;
+            
+            /* Status com cores mais vivas */
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
         }
 
         body {
@@ -38,7 +39,7 @@
         #selector-overlay {
             position: fixed;
             inset: 0;
-            background: #fff;
+            background: linear-gradient(135deg, #f5f5f5 0%, #d7d7d7 100%);
             z-index: 10000;
             display: flex;
             justify-content: center;
@@ -46,91 +47,143 @@
         }
 
         .login-box {
-            background: #fff;
+            background: var(--white);
             padding: 40px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
+            border-radius: 12px;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            width: 350px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 380px;
+            border-top: 5px solid var(--hsr-red);
         }
 
         .btn-entry {
-            padding: 10px;
+            padding: 12px;
             width: 100%;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            background: #eee;
-            color: #333;
+            border-radius: 6px;
+            border: 1px solid var(--gray-light);
+            background: var(--white);
+            color: var(--gray-dark);
             cursor: pointer;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
             text-transform: uppercase;
+            font-size: 13px;
         }
 
-        /* --- HEADER & STATS --- */
+        .btn-entry:hover {
+            background: var(--hsr-red);
+            color: white;
+            border-color: var(--hsr-red);
+        }
+
+        /* --- TOP BAR --- */
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--header-bg);
+            background: var(--white);
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .brand h1 { font-size: 18px; margin: 0; color: var(--text-main); }
-        .stat-group { display: flex; gap: 10px; align-items: center; }
-        .stat-card { padding: 5px 15px; border-radius: 4px; background: #eee; border: 1px solid var(--border); font-size: 12px; }
-        .stat-val { font-weight: 800; color: #000; }
+        .brand h1 { font-size: 20px; margin: 0; color: var(--hsr-red); font-weight: 800; }
+        .stat-group { display: flex; gap: 15px; align-items: center; }
+        .stat-card { 
+            padding: 8px 16px; 
+            border-radius: 6px; 
+            background: var(--bg-body); 
+            border: 1px solid var(--gray-light); 
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-medium);
+        }
+        .stat-val { font-weight: 800; color: var(--hsr-red); font-size: 14px; }
 
         .search-box {
-            border: 1px solid var(--border);
-            padding: 6px 12px;
-            border-radius: 4px;
-            width: 200px;
+            border: 1px solid var(--gray-light);
+            padding: 8px 15px;
+            border-radius: 6px;
+            width: 220px;
+            outline: none;
+        }
+        .search-box:focus { border-color: var(--hsr-red); }
+
+        /* --- TABLE STYLE --- */
+        .table-container {
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        /* --- TABLE STYLE (BASEADO NA IMAGEM) --- */
         table { width: 100%; border-collapse: collapse; font-size: 13px; }
         
         thead th {
-            background: var(--primary-gray);
+            background: var(--gray-dark);
             color: white;
-            padding: 8px;
+            padding: 12px 15px;
             text-align: left;
-            border: 1px solid #fff;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
         }
 
         .fila-section td {
-            background: var(--header-bg);
-            color: #fff;
+            background: #eee;
+            color: var(--gray-dark);
             font-weight: 800;
-            padding: 5px 10px;
-            border: 1px solid #fff;
+            padding: 10px 15px;
+            border-bottom: 2px solid var(--hsr-red);
+            font-size: 14px;
         }
 
         .fila-bar { display: flex; justify-content: space-between; align-items: center; }
-
-        .row-agent td {
-            padding: 6px 10px;
-            border: 1px solid var(--border);
+        .dialing-box { 
+            background: var(--hsr-red); 
+            color: white; 
+            padding: 2px 10px; 
+            border-radius: 20px; 
+            font-size: 11px;
         }
 
-        .row-agent:nth-child(even) { background: var(--row-even); }
-        .row-agent:nth-child(odd) { background: var(--row-odd); }
+        .row-agent td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .row-agent:hover { background-color: #fdfdfd; }
 
         /* --- STATUS COLORS --- */
-        .status-cell { font-weight: 600; text-align: center; }
-        .available { background-color: var(--success); color: var(--success-text); }
-        .busy { background-color: var(--calling); color: var(--calling-text); }
-        .paused { background-color: var(--pause); color: var(--pause-text); }
+        .status-cell { 
+            font-weight: 700; 
+            text-align: center; 
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+        
+        .available { color: var(--success); }
+        .busy { color: var(--hsr-red); font-weight: 800; }
+        .paused { color: var(--warning); }
+        .offline { color: var(--gray-medium); }
 
         .btn-ctrl {
-            background: #fff;
-            border: 1px solid var(--border);
+            background: var(--white);
+            border: 1px solid var(--gray-light);
             cursor: pointer;
-            padding: 2px 6px;
-            border-radius: 3px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            color: var(--gray-medium);
+            transition: all 0.2s;
+        }
+        .btn-ctrl:hover:not(:disabled) {
+            background: var(--hsr-red);
+            color: white;
+            border-color: var(--hsr-red);
         }
     </style>
 </head>
@@ -139,15 +192,15 @@
 
     <div id="selector-overlay">
         <div class="login-box">
-            <img src="https://hsr.com.br/wp-content/uploads/2022/10/logo-hsr-specialist-researchers.png" style="width: 140px; margin-bottom: 25px;">
+            <img src="https://hsr.com.br/wp-content/uploads/2022/10/logo-hsr-specialist-researchers.png" style="width: 160px; margin-bottom: 30px;">
             <div id="step-1">
                 <button class="btn-entry" onclick="entrar('INTERVIEW')">Acesso Interview</button>
                 <button class="btn-entry" onclick="entrar('DMG')">Acesso DMG</button>
-                <button class="btn-entry" style="background:#b3b3b3;" onclick="irParaSenha()">👑 FULL COMMAND (HSR)</button>
+                <button class="btn-entry" style="background: var(--gray-dark); color: white;" onclick="irParaSenha()">👑 FULL COMMAND (HSR)</button>
             </div>
             <div id="step-2" style="display:none">
-                <input type="password" id="hsr-pass" class="search-box" style="width:100%; margin-bottom:15px; text-align:center" placeholder="SENHA">
-                <button class="btn-entry" style="background:#333; color:#fff" onclick="validar()">ACESSAR</button>
+                <input type="password" id="hsr-pass" class="search-box" style="width:100%; margin-bottom:15px; text-align:center" placeholder="SENHA DE ACESSO">
+                <button class="btn-entry" style="background:var(--hsr-red); color:#fff; border:none" onclick="validar()">ACESSAR AGORA</button>
             </div>
         </div>
     </div>
@@ -155,48 +208,67 @@
     <div id="main-panel" style="display:none">
         <div class="top-bar">
             <div class="brand">
-                <h1>HSR MONITOR - <span id="label-empresa"></span></h1>
+                <h1>HSR MONITOR <span style="color:var(--gray-medium); font-weight:300">|</span> <span id="label-empresa" style="color:var(--gray-dark)"></span></h1>
             </div>
             <div class="stat-group">
-                <div class="stat-card">Agentes: <span id="count-total" class="stat-val">0</span></div>
-                <div class="stat-card">Falando: <span id="count-calls" class="stat-val">0</span></div>
-                <input type="text" id="filtro" class="search-box" placeholder="Filtrar..." oninput="renderizarTabela()">
+                <div class="stat-card">LOGADOS: <span id="count-total" class="stat-val">0</span></div>
+                <div class="stat-card">EM CHAMADA: <span id="count-calls" class="stat-val">0</span></div>
+                <input type="text" id="filtro" class="search-box" placeholder="Buscar agente, ramal ou fila..." oninput="renderizarTabela()">
             </div>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Agente</th>
-                    <th>Ramal</th>
-                    <th>Duração</th>
-                    <th>Falando com</th>
-                    <th>Fila</th>
-                    <th>Status</th>
-                    <th style="text-align:right">Ações</th>
-                </tr>
-            </thead>
-            <tbody id="tabela-corpo"></tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Agente</th>
+                        <th style="width: 10%;">Ramal</th>
+                        <th style="width: 12%;">Tempo Status</th>
+                        <th style="width: 15%;">Telefone</th>
+                        <th style="width: 15%;">Fila Atual</th>
+                        <th style="width: 18%; text-align:center">Status</th>
+                        <th style="width: 10%; text-align:right">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-corpo"></tbody>
+            </table>
+        </div>
     </div>
 
     <script>
         let selectedEmpresa = "";
-        const filaMemory = {};
+        const filaMemory = {}; // Memória para não perder a fila do agente
         const timers = {};
         let dadosGlobais = [];
         let chamadasAtivas = [];
 
-        function getFilaFixa(ramal) {
-            const r = String(ramal);
-            const mapa = {
+        function getFilaDinamica(item) {
+            const ramal = String(item.ramal);
+            
+            // 1. Prioridade: Mapa estático (Configurações manuais)
+            const mapaFixo = {
                 '16628': 'BRK_SUL',
                 '16629': 'BRK_SUL',
                 '16630': 'POLITICA_SP',
                 '16631': 'POLITICA_SP',
                 '16650': 'SANEAMENTO_GO',
             };
-            return mapa[r] || filaMemory[r] || "OUTROS";
+            if (mapaFixo[ramal]) return mapaFixo[ramal];
+
+            // 2. Se o agente está falando agora, captura a fila da chamada
+            if (item.chamada && item.chamada.caller_name) {
+                const cName = item.chamada.caller_name.toUpperCase();
+                if (!cName.includes("OUTBOUND")) {
+                    const match = cName.match(/^[A-Z0-9_]+/);
+                    if (match) {
+                        filaMemory[ramal] = match[0]; // Salva na memória
+                        return match[0];
+                    }
+                }
+            }
+
+            // 3. Se não está falando, tenta lembrar a última fila que ele usou
+            return filaMemory[ramal] || "OUTROS";
         }
 
         async function sincronizar() {
@@ -209,7 +281,6 @@
                 const dataStatus = await resStatus.json();
                 const dataCalls = await resCalls.json();
                 
-                // --- FILTRO DE UNICIDADE (CALL ID ÚNICO) ---
                 const rawCalls = dataCalls.calls || [];
                 const uniqueIds = new Set();
                 chamadasAtivas = rawCalls.filter(call => {
@@ -223,19 +294,20 @@
                         const ramal = ext.extension;
                         const call = chamadasAtivas.find(c => String(c.extension) === String(ramal));
 
-                        if (call && call.caller_name && !call.caller_name.toUpperCase().includes("OUTBOUND")) {
-                            const match = call.caller_name.toUpperCase().match(/^[A-Z0-9_]+/);
-                            if (match) filaMemory[ramal] = match[0];
-                        }
-
-                        return {
-                            ramal, dominio: ext.domain, call_id: call?.call_id,
+                        const objBase = {
+                            ramal, 
+                            dominio: ext.domain, 
+                            call_id: call?.call_id,
                             nome: ext.agent_info?.agent_name?.split('_')[0] || "AGENTE",
                             empresa: ext.agent_info?.agent_name?.split('_').pop().toUpperCase() || "HSR",
                             status: ext.agent_info?.agent_status || "OFFLINE",
-                            chamada: call,
-                            fila: getFilaFixa(ramal)
+                            chamada: call
                         };
+
+                        // Define a fila usando a nova lógica dinâmica
+                        objBase.fila = getFilaDinamica(objBase);
+                        
+                        return objBase;
                     });
                     renderizarTabela();
                 }
@@ -252,23 +324,26 @@
             document.getElementById('count-total').innerText = filtrados.length;
             document.getElementById('count-calls').innerText = filtrados.filter(f => f.chamada).length;
 
-            const grupos = filtrados.reduce((acc, obj) => { (acc[obj.fila] = acc[obj.fila] || []).push(obj); return acc; }, {});
+            // Agrupa por Fila
+            const grupos = filtrados.reduce((acc, obj) => { 
+                (acc[obj.fila] = acc[obj.fila] || []).push(obj); 
+                return acc; 
+            }, {});
 
             Object.keys(grupos).sort().forEach(nomeFila => {
                 let agentesHtml = "";
                 let hasVisible = false;
 
-                // Contagem de discagem filtrada por Call ID único
                 const emDiscagem = chamadasAtivas.filter(c => c.caller_name?.toUpperCase().includes(nomeFila) && !c.extension).length;
 
                 grupos[nomeFila].forEach(item => {
                     if (busca && !item.fila.includes(busca) && !item.nome.toUpperCase().includes(busca) && !item.ramal.includes(busca)) return;
                     hasVisible = true;
 
-                    let sClass = "paused", sText = item.status;
+                    let sClass = "offline", sText = item.status;
                     if (item.chamada) { sClass = "busy"; sText = "Em Atendimento"; }
                     else if (item.status === "Available") { sClass = "available"; sText = "Disponível"; }
-                    if (sText.includes("PAUSE") || sText.includes("Tabulação")) sClass = "paused";
+                    else if (sText.includes("PAUSE") || sText.includes("Tabulação")) { sClass = "paused"; }
 
                     if (!timers[item.ramal] || timers[item.ramal].status !== sText) timers[item.ramal] = { status: sText, start: agora };
                     const diff = agora - timers[item.ramal].start;
@@ -276,14 +351,16 @@
 
                     agentesHtml += `
                         <tr class="row-agent">
-                            <td><b>${item.nome}</b></td>
-                            <td>${item.ramal}</td>
+                            <td><b style="color:var(--gray-dark)">${item.nome}</b></td>
+                            <td><span style="font-family:'JetBrains Mono'">${item.ramal}</span></td>
                             <td>${tempoStr}</td>
                             <td>${item.chamada?.phone_number || "-"}</td>
-                            <td>${item.fila}</td>
+                            <td><span style="font-size:11px; color:var(--gray-medium)">${item.fila}</span></td>
                             <td class="status-cell ${sClass}">${sText}</td>
                             <td style="text-align:right">
-                                <button class="btn-ctrl" onclick="derrubar('${item.call_id}')" ${!item.call_id ? 'disabled' : ''}><i class="bi bi-telephone-x"></i></button>
+                                <button class="btn-ctrl" onclick="derrubar('${item.call_id}')" ${!item.call_id ? 'disabled' : ''}>
+                                    <i class="bi bi-telephone-x-fill"></i>
+                                </button>
                             </td>
                         </tr>`;
                 });
@@ -292,7 +369,7 @@
                     corpo.innerHTML += `
                         <tr class="fila-section"><td colspan="7">
                             <div class="fila-bar">
-                                <div>${nomeFila} (${grupos[nomeFila].length})</div>
+                                <div><i class="bi bi-layers-half"></i> ${nomeFila} <span style="font-weight:400; font-size:12px; margin-left:10px">(${grupos[nomeFila].length} agentes)</span></div>
                                 <div class="dialing-box">DISCANDO: ${emDiscagem}</div>
                             </div>
                         </td></tr>`;
@@ -301,11 +378,20 @@
             });
         }
 
-        function entrar(emp) { selectedEmpresa = emp; document.getElementById('selector-overlay').style.display = 'none'; document.getElementById('main-panel').style.display = 'block'; document.getElementById('label-empresa').innerText = emp; setInterval(sincronizar, 1500); }
+        function entrar(emp) { 
+            selectedEmpresa = emp; 
+            document.getElementById('selector-overlay').style.display = 'none'; 
+            document.getElementById('main-panel').style.display = 'block'; 
+            document.getElementById('label-empresa').innerText = emp; 
+            setInterval(sincronizar, 1500); 
+            sincronizar();
+        }
+
         function irParaSenha() { document.getElementById('step-1').style.display = 'none'; document.getElementById('step-2').style.display = 'block'; }
-        function validar() { if (document.getElementById('hsr-pass').value === "hsr") entrar('HSR'); else alert("Incorreto"); }
+        function validar() { if (document.getElementById('hsr-pass').value.toLowerCase() === "hsr") entrar('HSR'); else alert("Senha Incorreta"); }
+        
         async function derrubar(id) { 
-            if (id && confirm("Derrubar chamada?")) {
+            if (id && confirm("Deseja encerrar esta chamada obrigatoriamente?")) {
                 await fetch(`https://fastdialer.fastquest.net/app/extensions/active_calls_api.php?call_id=${id}`, { method: 'DELETE' });
             }
         }
